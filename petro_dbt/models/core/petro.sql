@@ -13,7 +13,7 @@ with petro_data as (
             "prices_SDV" as sdv,
             last_updated,
             -- row_number() over(partition by retailer, brand, strftime(DATE last_updated, '%d/%m/%Y'), address, postcode order by last_updated desc) as row_num,
-            {{ dbt_utils.generate_surrogate_key(['retailer', 'brand', 'address', 'last_updated']) }} as surrogate_key
+            {{ dbt_utils.generate_surrogate_key(['retailer', 'brand', 'address', 'postcode', 'last_updated']) }} as surrogate_key
         from {{ ref('stg_petro') }}
 
         {% if is_incremental() %}
