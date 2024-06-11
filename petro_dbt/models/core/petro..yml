@@ -6,3 +6,11 @@ models:
       materialized: incremental
       unique_key: surrogate_key
       tags: ['core']
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - retailer
+            - brand
+            - last_updated
+            - address
+            - postcode
