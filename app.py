@@ -5,8 +5,6 @@ import folium
 from streamlit_folium import folium_static
 import matplotlib.cm as cm
 import matplotlib.colors as colors
-import matplotlib.pyplot as plt
-from neuralprophet import NeuralProphet
 
 # Function to load data from DuckDB
 def load_data():
@@ -18,7 +16,7 @@ def load_data():
         INNER JOIN (SELECT retailer, MAX(last_updated) last_updated FROM petro GROUP BY 1) AS latest
             ON petro.retailer = latest.retailer AND petro.last_updated = latest.last_updated
 
-        WHERE petro.retailer != 'Morrisons' AND address != 'GX11 1AA'
+        WHERE postcode != 'GX11 1AA'
     """
     df = con.execute(query).fetchdf()
     con.close()
@@ -47,15 +45,6 @@ def load_historical_data():
     con.close()
     return historical_df
 
-# Function to forecast prices using NeuralProphet
-def forecast_prices(historical_df, fuel_type):
-    df_prophet = historical_df[['last_updated', fuel_type]].rename(columns={'last_updated': 'ds', fuel_type: 'y'})
-    model = NeuralProphet()
-    model.fit(df_prophet, freq='D')
-    future = model.make_future_dataframe(df_prophet, periods=30)
-    forecast = model.predict(future)
-    return forecast
-
 # Load the data
 df = load_data()
 historical_df = load_historical_data()
@@ -81,6 +70,7 @@ filtered_df = assign_colors(filtered_df, selected_fuel_type)
 # Overall Statistics
 st.title("Fuel Price Analysis and Insights in the UK")
 st.write("Welcome to our comprehensive analysis of fuel prices across various retailers in the UK. This report aims to provide detailed insights into fuel pricing patterns, trends, and future forecasts. We will explore the data through various lenses, including minimum and maximum prices, average prices, regional analysis, and historical trends.")
+
 min_price = df[selected_fuel_type].min()
 max_price = df[selected_fuel_type].max()
 mean_price = df[selected_fuel_type].mean()
@@ -96,7 +86,7 @@ st.write(f"**Mean Price:** {mean_price}")
 
 # Map for min and max price locations
 st.write("### Min and Max Price Locations")
-min_max_map = folium.Map(location=[(min_price_row['latitude'] + max_price_row['latitude']) / 2, (min_price_row['longitude'] + max_price_row['longitude']) / 2], zoom_start=6, tiles='CartoDB Positron')
+min_max_map = folium.Map(location=[(min_price_row['latitude'] + max_price_row['latitude']) / 2, (min_price_row['longitude'] + max_price_row['longitude']) / 2], zoom_start=6, tiles='CartoDB Positron', width='50%', height='50%')
 
 # Min price marker
 folium.Marker(
@@ -116,9 +106,7 @@ folium.Marker(
 
 folium_static(min_max_map)
 
-
-
-# Retailer-Specific Statistics
+# # Retailer-Specific Statistics
 # st.header("Retailer-Specific Statistics")
 # for retailer in retailers:
 #     retailer_data = df[df['retailer'] == retailer]
@@ -128,14 +116,14 @@ folium_static(min_max_map)
 #     st.write(f"**{retailer}**")
 #     st.write(f"Min: {min_price}, Max: {max_price}, Mean: {mean_price}")
 
-# Regional Analysis (NUTS)
+# # Regional Analysis (NUTS)
 # st.header("Regional Analysis")
 # # Assuming 'region' column exists in the data
 # regional_data = df.groupby('region')[selected_fuel_type].mean().sort_values()
 # st.write("Best regions to buy fuel based on average price:")
 # st.write(regional_data.head())
 
-# Create a Folium map
+# Create a Folium map for all data points
 st.header("Map of Fuel Prices")
 map_center = [filtered_df['latitude'].mean(), filtered_df['longitude'].mean()] if not filtered_df.empty else [51.509865, -0.118092]
 folium_map = folium.Map(location=map_center, zoom_start=6, tiles='CartoDB Positron')
@@ -162,41 +150,5 @@ historical_df_filtered = historical_df[['retailer', 'last_updated', selected_fue
 historical_df_filtered = historical_df_filtered.sort_values(by='last_updated', ascending=True)
 historical_df_filtered['last_updated'] = historical_df_filtered['last_updated'].dt.strftime('%Y-%m-%d')
 
-fig, ax = plt.subplots(figsize=(12, 8))
-colors = plt.cm.tab20.colors  # Use a colormap with enough colors
+st.line_chart(historical_df_filtered, x='last_updated', y=selected_fuel_type, color='retailer')
 
-st.bar_chart(historical_df_filtered, x='last_updated', y=selected_fuel_type, color='retailer')
-
-for i, retailer in enumerate(retailers):
-    retailer_data = historical_df_filtered[historical_df_filtered['retailer'] == retailer]
-    ax.plot(retailer_data['last_updated'], retailer_data[selected_fuel_type], label=f"{retailer}", color=colors[i % len(colors)], marker='o')
-
-
-
-ax.set_title(f'{selected_fuel_type.upper()} Prices Over Time for All Retailers')
-ax.set_xlabel('Date')
-ax.set_ylabel('Price')
-ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
-plt.xticks(rotation=45)
-plt.grid(True)
-st.pyplot(fig)
-
-# # Price Forecast
-# st.header("Price Forecast")
-# forecast = forecast_prices(historical_df, selected_fuel_type)
-# fig2, ax2 = plt.subplots(figsize=(12, 8))
-# ax2.plot(forecast['ds'], forecast['yhat1'], label='Forecast', color='blue')
-# ax2.fill_between(forecast['ds'], forecast['yhat1_lower'], forecast['yhat1_upper'], color='blue', alpha=0.2)
-# ax2.set_title(f'Forecast of {selected_fuel_type.upper()} Prices')
-# ax2.set_xlabel('Date')
-# ax2.set_ylabel('Price')
-# plt.xticks(rotation=45)
-# plt.grid(True)
-# st.pyplot(fig2)
-
-# Running the Streamlit App
-if __name__ == '__main__':
-    st.title('Fuel Prices Visualization')
-    st.write('Select a fuel type from the sidebar to visualize the locations of fuel stations by retailer and brand.')
-    st.write('The line chart below shows the historical prices over time for all retailers.')
-    st.write('The forecast chart predicts the future trends of fuel prices.')
