@@ -5,6 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from io import StringIO
 import logging
+import re
 from playwright.sync_api import sync_playwright
 
 
@@ -88,23 +89,21 @@ groceries_url = "https://groceries.asda.com"
 categories_url = "https://groceries.asda.com/cat/summer"
 
 
-# Fetch the categories from the file if exists otherwise run above function
-if os.path.exists("asda_categories.json"):
-    cats = json.load(open("asda_categories.json"))
-else:
-    try:
-        categories_soup = get_dynamic_soup(categories_url)
-        categories = extract_categories(categories_soup)
-    except Exception as e:
-        logging.error(f"Error fetching region stores: {e}")
+# # Fetch the categories from the file if exists otherwise run above function
+# if os.path.exists("asda_categories.json"):
+#     categories = json.load(open("asda_categories.json"))
+# else:
+#     try:
+#         categories_soup = get_dynamic_soup(categories_url)
+#         categories = extract_categories(categories_soup)
+#     except Exception as e:
+#         logging.error(f"Error fetching region stores: {e}")
 
-logging.info(f"Total categories: {cats}")
+# logging.info(f"Total categories: {categories}")
 
-product_classes = []
+# product_classes = []
 
-# for category in cats:
-#     print(category)
-
+# for category in categories[0:2]:
 #     cat = {}
 #     logging.info(f"Fetching category: {category['category']}")
 #     cat['category'] = category['category']
@@ -113,14 +112,119 @@ product_classes = []
 #         department_url = groceries_url + category['href']
 #         logging.info(f"Fetching category URL: {department_url}")
 #         department_soup = get_dynamic_soup(department_url)
-#         departments = extract_categories(department_soup)
+#         departments = extract_departments(department_soup)
 #         cat['departments'] = departments
-#         logging.info(f"Total departments: {departments}")
 #         product_classes.append(cat)
 #     except Exception as e:
 #         logging.error(f"Error fetching region stores: {e}")
 
-# print(product_classes)
+# for c in product_classes:
+#     for dept in c['departments']:
+#         try:
+#             asl = {}
+#             logging.info(f"Fetching aisle for dept: {dept['href']}")
+#             ail_url = groceries_url + dept['href']
+#             ail_soup = get_dynamic_soup(ail_url)
+#             ails = extract_aisles(ail_soup)
+#             print(ails)
+#         except Exception as e:
+#             logging.error(f"Error fetching aisle: {e}")
+
+
+# Function to clean text by replacing unwanted characters
+def clean_text(text):
+    text = text.replace('\u00a0', ' ')  # Replace non-breaking space with a regular space
+    text = text.replace('\u2018', "'")  # Replace left single quotation mark with an apostrophe
+    text = text.replace('\u2019', "'")  # Replace left single quotation mark with an apostrophe
+    return text
+
+def get_aisle_products(url):
+    products = []
+    aisle_soup_pages = get_dynamic_soup(url)
+
+    aisle_pagination = aisle_soup_pages.find('a', class_='co-pagination__last-page')
+    if aisle_pagination:
+        aisle_pagination = aisle_pagination.text.strip()
+    else:
+        aisle_pagination = 1
+    logging.info(f"Total pages: {aisle_pagination}")
+
+    for x in range(int(aisle_pagination)):
+        aisle_pagination_url = url + f"?page={x+1}"
+        logging.info(f"Fetching aisle pagination: {aisle_pagination_url}")
+        product_soup = get_dynamic_soup(aisle_pagination_url)
+        product_tags = product_soup.find_all('li', class_='co-item')
+
+        for item in product_tags:
+            product = {}
+            
+            title_tag = item.find('h3', class_='co-product__title')
+
+            logging.info(f"Fetching product: {title_tag.text.strip()}")
+
+            # Extract product title
+            title_tag = item.find('h3', class_='co-product__title')
+            if title_tag and title_tag.a:
+                product['title'] = clean_text(title_tag.a.text.strip())
+                href = title_tag.a['href']
+                product_code_match = re.search(r'(\d+)$', href)
+                product['product_code'] = product_code_match.group(1) if product_code_match else None
+        
+
+            # Extract was price if available
+            was_price_tag = item.find('span', class_='co-product__was-price')
+            if was_price_tag:
+                was_price_text = was_price_tag.text.strip()
+                was_price = re.search(r'\d+\.\d+', was_price_text)
+                product['was_price'] = was_price.group(0) if was_price else None
+            else:
+                product['was_price'] = None
+
+            # Extract product price
+            price_tag = item.find('strong', class_='co-product__price')
+            if price_tag:
+                price_text = price_tag.text.strip()
+                price = re.search(r'\d+\.\d+', price_text)
+                product['price'] = price.group(0) if price else None
+
+            # Extract price per UOM if available
+            price_per_uom_tag = item.find('span', class_='co-product__price-per-uom')
+            if price_per_uom_tag:
+                price_per_uom_text = price_per_uom_tag.text.strip('()')
+                cleaned_price_per_uom = re.sub(r'[^\d./]', '', price_per_uom_text)
+                product['price_per_uom'] = cleaned_price_per_uom
+            else:
+                product['price_per_uom'] = None
+
+            # Extract product volume
+            volume_tag = item.find('span', class_='co-product__volume')
+            if volume_tag:
+                product['volume'] = volume_tag.text.strip()
+            
+            saver_label_tag = item.find('div', class_='link-save-banner')
+            if saver_label_tag:
+                saver_label_text = saver_label_tag.get_text(separator=' ', strip=True)
+                product['saver_label'] = saver_label_text
+            else:
+                product['saver_label'] = None
+
+            # Extract promo rewards information
+            promo_rewards_tag = item.find('div', class_='co-product__promo--rewards')
+            if promo_rewards_tag:
+                promo_rewards_text = promo_rewards_tag.get_text(separator=' ', strip=True)
+                product['promo_rewards'] = promo_rewards_text
+            else:
+                product['promo_rewards'] = None
+
+            product_href = item.find('a', class_='co-product__anchor')
+            if product_href:
+                product['product_href'] = groceries_url + product_href['href']
+            else:
+                product['product_href'] = None
+            products.append(product)
+    return products
+        
+# products = get_aisle_products('https://groceries.asda.com/special-offers/all-offers')
 
 
 # try:
