@@ -150,5 +150,5 @@ historical_df_filtered = historical_df[['retailer', 'last_updated', selected_fue
 historical_df_filtered = historical_df_filtered.sort_values(by='last_updated', ascending=True)
 historical_df_filtered['last_updated'] = historical_df_filtered['last_updated'].dt.strftime('%Y-%m-%d')
 
-st.line_chart(historical_df_filtered, x='last_updated', y=selected_fuel_type, color='retailer')
+st.bar_chart(historical_df_filtered, x='last_updated', y=selected_fuel_type, color='retailer')
 
