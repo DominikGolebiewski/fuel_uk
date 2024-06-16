@@ -30,3 +30,19 @@ jobs:
           cd petro_dbt
           dbt deps
           dbt run
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Update from DBT run at $(date +'%Y-%m-%d %H:%M:%S')"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
