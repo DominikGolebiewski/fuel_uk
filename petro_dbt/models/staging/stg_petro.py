@@ -62,7 +62,7 @@ def model(dbt, session):
         {'retailer': 'Sainsburys', 'url': 'https://api.sainsburys.co.uk/v1/exports/latest/fuel_prices_data.json'},
         {'retailer': 'SGN', 'url': 'https://www.sgnretail.uk/files/data/SGN_daily_fuel_prices.json'},
         {'retailer': 'Shell', 'url': 'https://www.shell.co.uk/fuel-prices-data.html'},
-        # {'retailer': 'Tesco', 'url': 'https://www.tesco.com/fuel_prices/fuel_prices_data.json'},
+        {'retailer': 'Tesco', 'url': 'https://www.tesco.com/fuel_prices/fuel_prices_data.json'},
     ]
     
     aggregator = FuelPricesAggregator(urls)
