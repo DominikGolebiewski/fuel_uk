@@ -1,29 +1,53 @@
 import pandas as pd
 import json
 import requests
+import logging
+
+# Setting up the logging configuration
+logging.basicConfig(level=logging.INFO, filename='fuel_price_fetcher.log', 
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 class FuelPriceFetcher:
+
+    HEADERS = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    }
+
     def __init__(self, retailer, url):
         self.retailer = retailer
         self.url = url
         self.data = None
         self.df = None
+        self.logger = logging.getLogger(f'FuelPriceFetcher_{retailer}')
 
     def fetch_data(self):
-        response = requests.get(self.url)
-        response.raise_for_status()
-        self.data = response.json()
+        try:
+            response = requests.get(self.url, headers=self.HEADERS)
+            response.raise_for_status()
+            self.data = response.json()
+            self.logger.info(f'Successfully fetched data for {self.retailer}')
+            self.logger.info(f'Data: {self.data}')
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f'Error fetching data for {self.retailer}: {e}')
+            self.data = {}
 
     def process_data(self):
-        if 'stations' in self.data:
-            self.df = pd.json_normalize(self.data['stations'], sep='_')
-            all_possible_prices = ['prices_B7', 'prices_E10', 'prices_E5']
-            for price in all_possible_prices:
-                if price not in self.df.columns:
-                    self.df[price] = None
-            self.df['last_updated'] = self.data['last_updated']
-            self.df['retailer'] = self.retailer
-        else:
+        try:
+            if 'stations' in self.data:
+                self.df = pd.json_normalize(self.data['stations'], sep='_')
+                self.logger.info(f'Successfully processed data for {self.retailer}')
+                all_possible_prices = ['prices_B7', 'prices_E10', 'prices_E5', 'prices_SDV']
+                for price in all_possible_prices:
+                    if price not in self.df.columns:
+                        self.df[price] = None
+                self.df['last_updated'] = self.data.get('last_updated')
+                self.df['retailer'] = self.retailer
+                self.logger.info(f'Successfully processed data for {self.retailer}')
+            else:
+                self.df = pd.DataFrame()
+                self.logger.warning(f'No stations data found for {self.retailer}')
+        except Exception as e:
+            self.logger.error(f'Error processing data for {self.retailer}: {e}')
             self.df = pd.DataFrame()
 
     def get_dataframe(self):
@@ -35,15 +59,23 @@ class FuelPricesAggregator:
     def __init__(self, urls):
         self.urls = urls
         self.dataframes = []
+        self.logger = logging.getLogger('FuelPricesAggregator')
 
     def aggregate_data(self):
         for entry in self.urls:
             retailer = entry['retailer']
+            self.logger.info(f'Processing data for {retailer}')
             url = entry['url']
+            self.logger.info(f'Fetching data from {url}')
             fetcher = FuelPriceFetcher(retailer, url)
             df = fetcher.get_dataframe()
             self.dataframes.append(df)
-        combined_df = pd.concat(self.dataframes, ignore_index=True)
+        try:
+            combined_df = pd.concat(self.dataframes, ignore_index=True)
+            self.logger.info('Successfully aggregated data from all retailers')
+        except ValueError as e:
+            self.logger.error(f'Error aggregating data: {e}')
+            combined_df = pd.DataFrame()
         return combined_df
 
 def model(dbt, session):
