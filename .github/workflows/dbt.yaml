@@ -1,10 +1,10 @@
 name: Run DBT Project
 
 on:
-  schedule:
-    - cron: '0 6 * * *'  # 6 AM UTC
-    - cron: '0 14 * * *' # 2 PM UTC
-    - cron: '0 22 * * *' # 10 PM UTC
+  # schedule:
+  #   - cron: '0 6 * * *'  # 6 AM UTC
+  #   - cron: '0 14 * * *' # 2 PM UTC
+  #   - cron: '0 22 * * *' # 10 PM UTC
   workflow_dispatch: # Allows for manual triggering of the workflow
 
 jobs:
@@ -43,8 +43,7 @@ jobs:
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Update from DBT run at $(date +'%Y-%m-%d %H:%M:%S')"
           git remote set-url origin https://x-access-token:${{ secrets.pat }}@github.com/${{ github.repository }}
-          git commit -am "Automated run"
+          git commit -am "Update from DBT run at $(date +'%Y-%m-%d %H:%M:%S')"
           git push
 
