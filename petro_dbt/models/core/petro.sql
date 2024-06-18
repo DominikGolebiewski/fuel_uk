@@ -16,9 +16,9 @@ with petro_data as (
             {{ dbt_utils.generate_surrogate_key(['retailer', 'brand', 'address', 'last_updated']) }} as surrogate_key
         from {{ ref('stg_petro') }}
 
-        {% if is_incremental() %}
+        {#/* {% if is_incremental() %}
         where last_updated > (select max(last_updated) from {{ this }})
-        {% endif %}
+        {% endif %} */#}
 
 )
 select *

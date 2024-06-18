@@ -13,7 +13,7 @@ def load_data():
         SELECT * 
         FROM petro
         
-        INNER JOIN (SELECT retailer, MAX(last_updated) last_updated FROM petro GROUP BY 1) AS latest
+        LEFT JOIN (SELECT retailer, MAX(last_updated) last_updated FROM petro GROUP BY 1) AS latest
             ON petro.retailer = latest.retailer AND petro.last_updated = latest.last_updated
 
         WHERE postcode != 'GX11 1AA'
@@ -60,9 +60,11 @@ historical_df['last_updated'] = pd.to_datetime(historical_df['last_updated'])
 
 # Streamlit sidebar for user selection
 selected_fuel_type = st.sidebar.selectbox('Select Fuel Type', fuel_types)
+selected_retailer = st.sidebar.selectbox('Select Retailer', retailers)
+
 
 # Filter dataframe based on the selected fuel type and retailer
-filtered_df = df[(~df[selected_fuel_type].isnull())]
+filtered_df = df[(~df[selected_fuel_type].isnull()) & (df['retailer'] == selected_retailer)]
 
 # Assign colors to prices
 filtered_df = assign_colors(filtered_df, selected_fuel_type)
@@ -146,7 +148,7 @@ folium_static(folium_map)
 
 # Historical Price Trends
 st.header("Historical Price Trends")
-historical_df_filtered = historical_df[['retailer', 'last_updated', selected_fuel_type]].dropna()
+historical_df_filtered = historical_df[(historical_df['retailer'] == selected_retailer)][['retailer', 'last_updated', selected_fuel_type]].dropna()
 historical_df_filtered = historical_df_filtered.sort_values(by='last_updated', ascending=True)
 historical_df_filtered['last_updated'] = historical_df_filtered['last_updated'].dt.strftime('%Y-%m-%d')
 
