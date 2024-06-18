@@ -31,6 +31,10 @@ jobs:
           dbt deps
           dbt run
 
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.head_ref }}
+
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -40,9 +44,7 @@ jobs:
         run: |
           git add .
           git commit -m "Update from DBT run at $(date +'%Y-%m-%d %H:%M:%S')"
+          git remote set-url origin https://x-access-token:${{ secrets.pat }}@github.com/${{ github.repository }}
+          git commit -am "Automated run"
+          git push
 
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
