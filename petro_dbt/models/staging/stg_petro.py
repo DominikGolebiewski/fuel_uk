@@ -1,11 +1,14 @@
+import os
 import pandas as pd
 import json
 import requests
 import logging
+from datetime import datetime
+from slugify import slugify
 
-# Setting up the logging configuration
+# Setting up the logging configuration to append to the log file
 logging.basicConfig(level=logging.INFO, filename='fuel_price_fetcher.log', 
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                    filemode='a', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 class FuelPriceFetcher:
 
@@ -25,17 +28,38 @@ class FuelPriceFetcher:
             response = requests.get(self.url, headers=self.HEADERS)
             response.raise_for_status()
             self.data = response.json()
+            self.save_data_to_file()
             self.logger.info(f'Successfully fetched data for {self.retailer}')
-            self.logger.info(f'Data: {self.data}')
         except requests.exceptions.RequestException as e:
             self.logger.error(f'Error fetching data for {self.retailer}: {e}')
             self.data = {}
+
+    def save_data_to_file(self):
+        try:
+            updated_at = self.data.get('last_updated', datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+            if isinstance(updated_at, int):
+                updated_at = datetime.fromtimestamp(updated_at).strftime('%Y-%m-%d_%H-%M-%S')
+            else:
+                updated_at = datetime.strptime(updated_at, '%d/%m/%Y %H:%M:%S').strftime('%d_%m_%Y_%H_%M_%S')
+            
+            retailer_slug = slugify(self.retailer)
+            retailer_folder = os.path.join('files', retailer_slug)
+            os.makedirs(retailer_folder, exist_ok=True)
+            
+            filename = f'{retailer_slug}_{updated_at}.json'
+            file_path = os.path.join(retailer_folder, filename)
+            
+            with open(file_path, 'w') as json_file:
+                json.dump(self.data, json_file, indent=4)
+                
+            self.logger.info(f'Successfully saved data to {file_path}')
+        except Exception as e:
+            self.logger.error(f'Error saving data for {self.retailer}: {e}')
 
     def process_data(self):
         try:
             if 'stations' in self.data:
                 self.df = pd.json_normalize(self.data['stations'], sep='_')
-                self.logger.info(f'Successfully processed data for {self.retailer}')
                 all_possible_prices = ['prices_B7', 'prices_E10', 'prices_E5', 'prices_SDV']
                 for price in all_possible_prices:
                     if price not in self.df.columns:
@@ -100,4 +124,3 @@ def model(dbt, session):
     aggregator = FuelPricesAggregator(urls)
     combined_df = aggregator.aggregate_data()
     return combined_df
-
