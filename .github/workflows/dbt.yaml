@@ -10,13 +10,14 @@ on:
 jobs:
   run-dbt:
     runs-on: ubuntu-latest
-
+    env:
+      ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.12'  # Adjust the Python version as needed
 
@@ -40,19 +41,12 @@ jobs:
           dbt deps
           dbt run
 
-      - name: Check for changes
-        run: git status
-
-      - name: Configure git
-        run: |
+      - name: Commit and push changes
+        run: | 
+          git status
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Commit and push changes
-        env:
-          ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
-        run: |
           git add .
           git commit -m "Update files from DBT run"
-          git push https://x-access-token:${{ secrets.ACTIONS_PAT }}@github.com/${{ github.repository }}.git main
+          git push
 
