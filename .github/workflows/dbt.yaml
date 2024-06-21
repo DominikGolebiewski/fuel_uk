@@ -53,6 +53,4 @@ jobs:
           git add files/*
           git commit -m "Update files from DBT run"
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git main
-        if: |
-          git diff --quiet || echo "Changes detected"
 
