@@ -49,8 +49,10 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Commit and push changes
+        env:
+          PAT: ${{ secrets.PAT }}
         run: |
           git add .
-          git commit -m "Update branch with latest changes."
+          git commit -m "Update files from DBT run"
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git main
 
