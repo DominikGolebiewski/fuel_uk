@@ -42,6 +42,7 @@ jobs:
           cd petro_dbt
           dbt deps
           dbt run
+          dbt clean
 
       - name: Commit and push changes
         run: |
