@@ -50,7 +50,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add files/*
-          git commit -m "Update files from DBT run"
+          git add .
+          git commit -m "Update branch with latest changes."
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git main
 
