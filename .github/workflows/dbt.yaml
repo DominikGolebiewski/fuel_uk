@@ -1,10 +1,10 @@
 name: Run DBT Project
 
 on:
-  # schedule:
-  #   - cron: '0 6 * * *'  # 6 AM UTC
-  #   - cron: '0 14 * * *' # 2 PM UTC
-  #   - cron: '0 22 * * *' # 10 PM UTC
+  schedule:
+    - cron: '0 6 * * *'  # 6 AM UTC
+    - cron: '0 14 * * *' # 2 PM UTC
+    - cron: '0 22 * * *' # 10 PM UTC
   workflow_dispatch: # Allows for manual triggering of the workflow
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'  # Adjust the Python version as needed
+          python-version: '3.12'  # Adjust the Python version as needed
 
       - name: Install dependencies
         run: |
@@ -31,19 +31,19 @@ jobs:
           dbt deps
           dbt run
 
-      - uses: actions/checkout@v1
-        with:
-          ref: ${{ github.head_ref }}
+      - name: Check for changes
+        run: git status
 
-      - name: Configure Git
+      - name: Configure git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git add .
-          git remote set-url origin https://x-access-token:${{ secrets.pat }}@github.com/${{ github.repository }}
-          git commit -am "Update from DBT run at $(date +'%Y-%m-%d %H:%M:%S')"
-          git push
+          git commit -m "Update master branch"
+          git push origin master
+        if: |
+          git diff --quiet || echo "Changes detected"
 
