@@ -49,12 +49,10 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Commit and push changes
-        env:
-          ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
         run: |
           git add files/*
           git commit -m "Update files from DBT run"
-          git push https://x-access-token:${{ secrets.ACTIONS_PAT }}@github.com/${{ github.repository }}.git main
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git main
         if: |
           git diff --quiet || echo "Changes detected"
 
