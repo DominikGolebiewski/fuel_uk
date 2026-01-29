@@ -5,6 +5,8 @@ import requests
 import logging
 from datetime import datetime
 from slugify import slugify
+from pathlib import Path
+import glob
 
 # Setting up the logging configuration to append to the log file
 logging.basicConfig(level=logging.INFO, filename='fuel_price_fetcher.log', 
@@ -80,9 +82,10 @@ class FuelPriceFetcher:
         return self.df
 
 class FuelPricesAggregator:
-    def __init__(self, urls):
+    def __init__(self, urls, files_directory='files'):
         self.urls = urls
         self.dataframes = []
+        self.files_directory = files_directory
         self.logger = logging.getLogger('FuelPricesAggregator')
 
     def aggregate_data(self):
@@ -101,9 +104,58 @@ class FuelPricesAggregator:
             self.logger.error(f'Error aggregating data: {e}')
             combined_df = pd.DataFrame()
         return combined_df
+    
+    def load_from_files(self):
+        """Load all historical data from JSON files in the files directory"""
+        self.logger.info(f'Loading data from files directory: {self.files_directory}')
+        
+        for entry in self.urls:
+            retailer = entry['retailer']
+            retailer_slug = slugify(retailer)
+            retailer_folder = os.path.join(self.files_directory, retailer_slug)
+            
+            if not os.path.exists(retailer_folder):
+                self.logger.warning(f'No files directory found for {retailer} at {retailer_folder}')
+                continue
+            
+            # Get all JSON files for this retailer
+            json_files = glob.glob(os.path.join(retailer_folder, '*.json'))
+            self.logger.info(f'Found {len(json_files)} files for {retailer}')
+            
+            for json_file in json_files:
+                try:
+                    with open(json_file, 'r') as f:
+                        data = json.load(f)
+                    
+                    if 'stations' in data:
+                        df = pd.json_normalize(data['stations'], sep='_')
+                        all_possible_prices = ['prices_B7', 'prices_E10', 'prices_E5', 'prices_SDV']
+                        for price in all_possible_prices:
+                            if price not in df.columns:
+                                df[price] = None
+                        df['last_updated'] = data.get('last_updated')
+                        df['retailer'] = retailer
+                        self.dataframes.append(df)
+                    else:
+                        self.logger.warning(f'No stations data found in {json_file}')
+                        
+                except Exception as e:
+                    self.logger.error(f'Error loading data from {json_file}: {e}')
+        
+        try:
+            combined_df = pd.concat(self.dataframes, ignore_index=True)
+            self.logger.info(f'Successfully loaded data from files. Total rows: {len(combined_df)}')
+        except ValueError as e:
+            self.logger.error(f'Error aggregating data from files: {e}')
+            combined_df = pd.DataFrame()
+        
+        return combined_df
 
 def model(dbt, session):
+    from dbt.flags import get_flags
+    
     dbt.config(materialized="table")
+    
     urls = [
         {'retailer': 'Applegreen UK', 'url': 'https://applegreenstores.com/fuel-prices/data.json'},
         {'retailer': 'Ascona Group', 'url': 'https://fuelprices.asconagroup.co.uk/newfuel.json'},
@@ -122,5 +174,19 @@ def model(dbt, session):
     ]
     
     aggregator = FuelPricesAggregator(urls)
-    combined_df = aggregator.aggregate_data()
+    
+    # Check if this is a full refresh run using dbt flags
+    flags = get_flags()
+    is_full_refresh = getattr(flags, 'FULL_REFRESH', False)
+    
+    logger = logging.getLogger('stg_petro_model')
+    logger.info(f'Full refresh flag detected: {is_full_refresh}')
+    
+    if is_full_refresh:
+        logger.info('Running in FULL REFRESH mode - loading data from files directory')
+        combined_df = aggregator.load_from_files()
+    else:
+        logger.info('Running in INCREMENTAL mode - fetching data from API')
+        combined_df = aggregator.aggregate_data()
+    
     return combined_df
