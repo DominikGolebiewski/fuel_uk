@@ -21023,3 +21023,364 @@ SELECT version()
 [0m14:30:01.401459 [debug] [MainThread]: Command `dbt clean` succeeded at 14:30:01.401355 after 0.17 seconds
 [0m14:30:01.401908 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f589fc0b350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f589d35d4c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f589c9092e0>]}
 [0m14:30:01.402447 [debug] [MainThread]: Flushing usage events
+[0m22:14:13.281382 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff6126933b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff6121d41a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff612693770>]}
+
+
+============================== 22:14:13.316746 | 6d479b10-e9de-4480-8062-3aca634bea02 ==============================
+[0m22:14:13.316746 [info ] [MainThread]: Running with dbt=1.8.0
+[0m22:14:13.317414 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'invocation_command': 'dbt deps', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m22:14:13.559466 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '6d479b10-e9de-4480-8062-3aca634bea02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff613d16c60>]}
+[0m22:14:13.574729 [debug] [MainThread]: Set downloads directory='/tmp/dbt-downloads-n3h4blye'
+[0m22:14:13.575192 [debug] [MainThread]: Making package index registry request: GET https://hub.getdbt.com/api/v1/index.json
+[0m22:14:13.617188 [debug] [MainThread]: Response from registry index: GET https://hub.getdbt.com/api/v1/index.json 200
+[0m22:14:13.618406 [debug] [MainThread]: Making package registry request: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json
+[0m22:14:13.652093 [debug] [MainThread]: Response from registry: GET https://hub.getdbt.com/api/v1/dbt-labs/dbt_utils.json 200
+[0m22:14:13.657275 [info ] [MainThread]: Installing dbt-labs/dbt_utils
+[0m22:14:13.837108 [info ] [MainThread]: Installed from version 1.2.0
+[0m22:14:13.837697 [info ] [MainThread]: Updated version available: 1.3.3
+[0m22:14:13.838226 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'package', 'label': '6d479b10-e9de-4480-8062-3aca634bea02', 'property_': 'install', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff611ec6720>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff611d09cd0>]}
+[0m22:14:13.838688 [info ] [MainThread]: 
+[0m22:14:13.839155 [info ] [MainThread]: Updates available for packages: ['dbt-labs/dbt_utils']                 
+Update your versions in packages.yml, then run dbt deps
+[0m22:14:13.846434 [debug] [MainThread]: Resource report: {"command_name": "deps", "command_success": true, "command_wall_clock_time": 0.61663646, "process_user_time": 1.651728, "process_kernel_time": 0.13322, "process_mem_max_rss": "101264", "process_in_blocks": "8504", "process_out_blocks": "5176"}
+[0m22:14:13.846982 [debug] [MainThread]: Command `dbt deps` succeeded at 22:14:13.846882 after 0.62 seconds
+[0m22:14:13.847432 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff6131d4ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff611d55430>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff611d55490>]}
+[0m22:14:13.847843 [debug] [MainThread]: Flushing usage events
+[0m22:14:15.415616 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09de4934a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09de359a60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09de35a330>]}
+
+
+============================== 22:14:15.418642 | 3355ac2c-a61d-4c1f-a3ce-97f99333e2be ==============================
+[0m22:14:15.418642 [info ] [MainThread]: Running with dbt=1.8.0
+[0m22:14:15.419344 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt', 'log_path': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt run', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m22:14:15.650349 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09dd8bf3b0>]}
+[0m22:14:15.711190 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09dd9c5700>]}
+[0m22:14:15.712945 [info ] [MainThread]: Registered adapter: duckdb=1.10.0
+[0m22:14:15.744265 [debug] [MainThread]: checksum: dbb12d416fdb55e3665e4828703bbedf40c5c90ed7ca6ff39bbbfb29b12b0a92, vars: {}, profile: , target: , version: 1.8.0
+[0m22:14:15.744973 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m22:14:15.745519 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d62611f0>]}
+[0m22:14:17.121259 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m22:14:17.121857 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d5a1e600>]}
+[0m22:14:17.357267 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.petro.example
+[0m22:14:17.362410 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d5a96fc0>]}
+[0m22:14:17.453158 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d5b86510>]}
+[0m22:14:17.453696 [info ] [MainThread]: Found 2 models, 1 test, 539 macros
+[0m22:14:17.454223 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d5b4ebd0>]}
+[0m22:14:17.456249 [info ] [MainThread]: 
+[0m22:14:17.456943 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m22:14:17.461726 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_petro'
+[0m22:14:17.497403 [debug] [ThreadPool]: Using duckdb connection "list_petro"
+[0m22:14:17.497840 [debug] [ThreadPool]: On list_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "connection_name": "list_petro"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"petro"'
+    
+  
+  
+[0m22:14:17.498256 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m22:14:17.948754 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.950387 [debug] [ThreadPool]: On list_petro: Close
+[0m22:14:17.951287 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_petro, now create_petro_main)
+[0m22:14:17.951825 [debug] [ThreadPool]: Creating schema "database: "petro"
+schema: "main"
+"
+[0m22:14:17.959328 [debug] [ThreadPool]: Using duckdb connection "create_petro_main"
+[0m22:14:17.959744 [debug] [ThreadPool]: On create_petro_main: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "connection_name": "create_petro_main"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='petro'
+        and type='sqlite'
+    
+  
+[0m22:14:17.960117 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m22:14:17.961256 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.962539 [debug] [ThreadPool]: Using duckdb connection "create_petro_main"
+[0m22:14:17.962928 [debug] [ThreadPool]: On create_petro_main: BEGIN
+[0m22:14:17.963514 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.963893 [debug] [ThreadPool]: Using duckdb connection "create_petro_main"
+[0m22:14:17.964268 [debug] [ThreadPool]: On create_petro_main: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "connection_name": "create_petro_main"} */
+
+    
+    
+        create schema if not exists "petro"."main"
+    
+[0m22:14:17.964866 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.965771 [debug] [ThreadPool]: On create_petro_main: COMMIT
+[0m22:14:17.966163 [debug] [ThreadPool]: Using duckdb connection "create_petro_main"
+[0m22:14:17.966555 [debug] [ThreadPool]: On create_petro_main: COMMIT
+[0m22:14:17.967140 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.967566 [debug] [ThreadPool]: On create_petro_main: Close
+[0m22:14:17.968737 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_petro_main, now list_petro_main)
+[0m22:14:17.974507 [debug] [ThreadPool]: Using duckdb connection "list_petro_main"
+[0m22:14:17.974905 [debug] [ThreadPool]: On list_petro_main: BEGIN
+[0m22:14:17.975285 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m22:14:17.975947 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.976354 [debug] [ThreadPool]: Using duckdb connection "list_petro_main"
+[0m22:14:17.976788 [debug] [ThreadPool]: On list_petro_main: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "connection_name": "list_petro_main"} */
+select
+      'petro' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main'
+    and lower(table_catalog) = 'petro'
+  
+[0m22:14:17.987552 [debug] [ThreadPool]: SQL status: OK in 0.0 seconds
+[0m22:14:17.988869 [debug] [ThreadPool]: On list_petro_main: ROLLBACK
+[0m22:14:17.990053 [debug] [ThreadPool]: Failed to rollback 'list_petro_main'
+[0m22:14:17.990480 [debug] [ThreadPool]: On list_petro_main: Close
+[0m22:14:17.991523 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09df782930>]}
+[0m22:14:17.992030 [debug] [MainThread]: Using duckdb connection "master"
+[0m22:14:17.992471 [debug] [MainThread]: On master: BEGIN
+[0m22:14:17.992836 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m22:14:17.993536 [debug] [MainThread]: SQL status: OK in 0.0 seconds
+[0m22:14:17.993941 [debug] [MainThread]: On master: COMMIT
+[0m22:14:17.994363 [debug] [MainThread]: Using duckdb connection "master"
+[0m22:14:17.994734 [debug] [MainThread]: On master: COMMIT
+[0m22:14:17.995318 [debug] [MainThread]: SQL status: OK in 0.0 seconds
+[0m22:14:17.995710 [debug] [MainThread]: On master: Close
+[0m22:14:17.996192 [info ] [MainThread]: Concurrency: 1 threads (target='prod')
+[0m22:14:17.996712 [info ] [MainThread]: 
+[0m22:14:18.053915 [debug] [Thread-1 (]: Began running node model.petro.stg_petro
+[0m22:14:18.054516 [info ] [Thread-1 (]: 1 of 2 START python table model main.stg_petro ................................. [RUN]
+[0m22:14:18.055148 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_petro_main, now model.petro.stg_petro)
+[0m22:14:18.055604 [debug] [Thread-1 (]: Began compiling node model.petro.stg_petro
+[0m22:14:18.082358 [debug] [Thread-1 (]: Writing injected SQL for node "model.petro.stg_petro"
+[0m22:14:18.083078 [debug] [Thread-1 (]: Began executing node model.petro.stg_petro
+[0m22:14:18.118198 [debug] [Thread-1 (]: Writing runtime python for node "model.petro.stg_petro"
+[0m22:14:18.118944 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m22:14:26.676590 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.677139 [debug] [Thread-1 (]: On model.petro.stg_petro: BEGIN
+[0m22:14:26.677898 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.678376 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.678804 [debug] [Thread-1 (]: On model.petro.stg_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.stg_petro"} */
+
+    SELECT index_name
+    FROM duckdb_indexes()
+    WHERE schema_name = 'main'
+      AND table_name = 'stg_petro'
+  
+[0m22:14:26.679813 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.681166 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.681622 [debug] [Thread-1 (]: On model.petro.stg_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.stg_petro"} */
+
+    SELECT COUNT(*) as remaining_indexes
+    FROM duckdb_indexes()
+    WHERE schema_name = 'main'
+      AND table_name = 'stg_petro'
+  
+[0m22:14:26.682662 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.690553 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.691005 [debug] [Thread-1 (]: On model.petro.stg_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.stg_petro"} */
+alter table "petro"."main"."stg_petro" rename to "stg_petro__dbt_backup"
+[0m22:14:26.691829 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.694780 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.695243 [debug] [Thread-1 (]: On model.petro.stg_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.stg_petro"} */
+alter table "petro"."main"."stg_petro__dbt_tmp" rename to "stg_petro"
+[0m22:14:26.695963 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.712500 [debug] [Thread-1 (]: On model.petro.stg_petro: COMMIT
+[0m22:14:26.712961 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.713401 [debug] [Thread-1 (]: On model.petro.stg_petro: COMMIT
+[0m22:14:26.715193 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.720814 [debug] [Thread-1 (]: Using duckdb connection "model.petro.stg_petro"
+[0m22:14:26.721284 [debug] [Thread-1 (]: On model.petro.stg_petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.stg_petro"} */
+
+      drop table if exists "petro"."main"."stg_petro__dbt_backup" cascade
+    
+[0m22:14:26.722432 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.724808 [debug] [Thread-1 (]: On model.petro.stg_petro: Close
+[0m22:14:26.726318 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09d40b71a0>]}
+[0m22:14:26.726988 [info ] [Thread-1 (]: 1 of 2 OK created python table model main.stg_petro ............................ [[32mOK[0m in 8.67s]
+[0m22:14:26.727770 [debug] [Thread-1 (]: Finished running node model.petro.stg_petro
+[0m22:14:26.728743 [debug] [Thread-1 (]: Began running node model.petro.petro
+[0m22:14:26.729313 [info ] [Thread-1 (]: 2 of 2 START sql incremental model main.petro .................................. [RUN]
+[0m22:14:26.729898 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.petro.stg_petro, now model.petro.petro)
+[0m22:14:26.730351 [debug] [Thread-1 (]: Began compiling node model.petro.petro
+[0m22:14:26.735336 [debug] [Thread-1 (]: Writing injected SQL for node "model.petro.petro"
+[0m22:14:26.735971 [debug] [Thread-1 (]: Began executing node model.petro.petro
+[0m22:14:26.771773 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.772274 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+
+    
+  
+    
+    
+
+    create temporary table
+      "petro__dbt_tmp20260209221426765858"
+  
+    as (
+      with petro_data as (
+
+        select 
+            retailer,
+            brand,
+            address,
+            postcode,
+            location_latitude as latitude,
+            location_longitude as longitude,
+            "prices_B7" as b7,
+            "prices_E10" as e10,
+            "prices_E5" as e5,
+            "prices_SDV" as sdv,
+            last_updated,
+            -- row_number() over(partition by retailer, brand, strftime(DATE last_updated, '%d/%m/%Y'), address, postcode order by last_updated desc) as row_num,
+            md5(cast(coalesce(cast(retailer as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(brand as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(address as TEXT), '_dbt_utils_surrogate_key_null_') || '-' || coalesce(cast(last_updated as TEXT), '_dbt_utils_surrogate_key_null_') as TEXT)) as surrogate_key
+        from "petro"."main"."stg_petro"
+
+        
+
+)
+select *
+from petro_data
+    );
+  
+  
+  
+[0m22:14:26.772726 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m22:14:26.779541 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.786929 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.787434 [debug] [Thread-1 (]: On model.petro.petro: BEGIN
+[0m22:14:26.788079 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.788544 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.788965 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+
+      select
+          column_name,
+          data_type,
+          character_maximum_length,
+          numeric_precision,
+          numeric_scale
+
+      from system.information_schema.columns
+      where table_name = 'petro__dbt_tmp20260209221426765858'
+      
+      
+      order by ordinal_position
+
+  
+[0m22:14:26.791451 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.796554 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.797009 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+
+      select
+          column_name,
+          data_type,
+          character_maximum_length,
+          numeric_precision,
+          numeric_scale
+
+      from system.information_schema.columns
+      where table_name = 'petro'
+      
+      and lower(table_schema) = 'main'
+      
+      
+      and lower(table_catalog) = 'petro'
+      
+      order by ordinal_position
+
+  
+[0m22:14:26.799481 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.807098 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.807572 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+
+      select
+          column_name,
+          data_type,
+          character_maximum_length,
+          numeric_precision,
+          numeric_scale
+
+      from system.information_schema.columns
+      where table_name = 'petro'
+      
+      and lower(table_schema) = 'main'
+      
+      
+      and lower(table_catalog) = 'petro'
+      
+      order by ordinal_position
+
+  
+[0m22:14:26.809913 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.811566 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.812006 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+SELECT version()
+[0m22:14:26.812723 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.830827 [debug] [Thread-1 (]: Writing runtime sql for node "model.petro.petro"
+[0m22:14:26.831500 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.831958 [debug] [Thread-1 (]: On model.petro.petro: /* {"app": "dbt", "dbt_version": "1.8.0", "profile_name": "petro", "target_name": "prod", "node_id": "model.petro.petro"} */
+
+        
+            delete from "petro"."main"."petro"
+            where (
+                surrogate_key) in (
+                select (surrogate_key)
+                from "petro__dbt_tmp20260209221426765858"
+            );
+
+        
+    
+
+    insert into "petro"."main"."petro" ("retailer", "brand", "address", "postcode", "latitude", "longitude", "b7", "e10", "e5", "sdv", "last_updated", "surrogate_key")
+    (
+        select "retailer", "brand", "address", "postcode", "latitude", "longitude", "b7", "e10", "e5", "sdv", "last_updated", "surrogate_key"
+        from "petro__dbt_tmp20260209221426765858"
+    )
+  
+[0m22:14:26.843186 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.844944 [debug] [Thread-1 (]: On model.petro.petro: COMMIT
+[0m22:14:26.845398 [debug] [Thread-1 (]: Using duckdb connection "model.petro.petro"
+[0m22:14:26.845802 [debug] [Thread-1 (]: On model.petro.petro: COMMIT
+[0m22:14:26.851281 [debug] [Thread-1 (]: SQL status: OK in 0.0 seconds
+[0m22:14:26.852123 [debug] [Thread-1 (]: On model.petro.petro: Close
+[0m22:14:26.852782 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '3355ac2c-a61d-4c1f-a3ce-97f99333e2be', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09925948c0>]}
+[0m22:14:26.853449 [info ] [Thread-1 (]: 2 of 2 OK created sql incremental model main.petro ............................. [[32mOK[0m in 0.12s]
+[0m22:14:26.854174 [debug] [Thread-1 (]: Finished running node model.petro.petro
+[0m22:14:26.855705 [debug] [MainThread]: Using duckdb connection "master"
+[0m22:14:26.856119 [debug] [MainThread]: On master: BEGIN
+[0m22:14:26.856538 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m22:14:26.857241 [debug] [MainThread]: SQL status: OK in 0.0 seconds
+[0m22:14:26.857649 [debug] [MainThread]: On master: COMMIT
+[0m22:14:26.858015 [debug] [MainThread]: Using duckdb connection "master"
+[0m22:14:26.858420 [debug] [MainThread]: On master: COMMIT
+[0m22:14:26.858993 [debug] [MainThread]: SQL status: OK in 0.0 seconds
+[0m22:14:26.859428 [debug] [MainThread]: On master: Close
+[0m22:14:26.859886 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m22:14:26.860266 [debug] [MainThread]: Connection 'model.petro.petro' was properly closed.
+[0m22:14:26.860662 [info ] [MainThread]: 
+[0m22:14:26.861115 [info ] [MainThread]: Finished running 1 table model, 1 incremental model in 0 hours 0 minutes and 9.40 seconds (9.40s).
+[0m22:14:26.862013 [debug] [MainThread]: Command end result
+[0m22:14:26.887415 [info ] [MainThread]: 
+[0m22:14:26.887979 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m22:14:26.888462 [info ] [MainThread]: 
+[0m22:14:26.888937 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[0m22:14:26.889879 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 11.525606, "process_user_time": 5.691854, "process_kernel_time": 0.284342, "process_mem_max_rss": "282216", "process_in_blocks": "1200", "process_out_blocks": "107416"}
+[0m22:14:26.890441 [debug] [MainThread]: Command `dbt run` succeeded at 22:14:26.890338 after 11.53 seconds
+[0m22:14:26.890874 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09e1fbb980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09dde840e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f09de491c70>]}
+[0m22:14:26.891318 [debug] [MainThread]: Flushing usage events
+[0m22:14:28.649397 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d2824800>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d06fa240>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d0422060>]}
+
+
+============================== 22:14:28.652399 | 2b50af38-73b7-47b0-9a42-3a4969c9b609 ==============================
+[0m22:14:28.652399 [info ] [MainThread]: Running with dbt=1.8.0
+[0m22:14:28.653078 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/home/runner/work/fuel_uk/fuel_uk/petro_dbt/logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'invocation_command': 'dbt clean', 'send_anonymous_usage_stats': 'True'}
+[0m22:14:28.768430 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '2b50af38-73b7-47b0-9a42-3a4969c9b609', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d09b66c0>]}
+[0m22:14:28.786389 [debug] [MainThread]: Resource report: {"command_name": "clean", "command_success": true, "command_wall_clock_time": 0.18888032, "process_user_time": 1.322092, "process_kernel_time": 0.111923, "process_mem_max_rss": "99764", "process_out_blocks": "8", "process_in_blocks": "0"}
+[0m22:14:28.786923 [debug] [MainThread]: Command `dbt clean` succeeded at 22:14:28.786823 after 0.19 seconds
+[0m22:14:28.787377 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d46d3980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d0cbc3b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f04d09b66c0>]}
+[0m22:14:28.787787 [debug] [MainThread]: Flushing usage events
